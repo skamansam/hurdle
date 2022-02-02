@@ -1,6 +1,7 @@
 {
-	"name": "wordle-helper",
+	"name": "hurdle",
 	"version": "0.0.1",
+	"description": "Mastermind-like game using words.",
 	"scripts": {
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build",
