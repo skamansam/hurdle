@@ -13,6 +13,12 @@ let guessedLetters = {};
 let error: String = null;
 let correctnessMap: string[][] = [];
 
+const setValidation = (letter: string, validation: string) => {
+  if (guessedLetters[letter] === validation || guessedLetters[letter] === 'c') return validation;
+  guessedLetters[letter] = validation;
+  return validation;
+}
+
 const calculateCorrectness = (): undefined => {
   let currentWord: String = guessedWords[currentGuessIndex].toLowerCase();
   const guessArray: string[] = currentWord.toLowerCase().split('');
@@ -23,11 +29,10 @@ const calculateCorrectness = (): undefined => {
     return;
   }
   correctnessMap[currentGuessIndex] = guessArray.map((l, index) => {
-    if(l === wordArray[index]) return 'c';  // "c"orrect
-    if (wordArray.includes(l)) return 'p';  // "p"resent
-    return 'm';                               // "m"issing
+    if(l === wordArray[index]) return setValidation(l, 'c');  // "c"orrect
+    if (wordArray.includes(l)) return setValidation(l, 'p');  // "p"resent
+    return setValidation(l, 'm');                               // "m"issing
   });
-  console.log(correctnessMap, word, guessArray);
 }
 
 const validateWord = (word: string) => {
@@ -84,6 +89,6 @@ const handleStateChanged = (index: Number, evt: Event) => {
     {/each}
   </ul>
   <div class="flex justify-center items-center my-4">
-    <Keyboard guessedLetters={correctnessMap}></Keyboard>
+    <Keyboard validations={guessedLetters}></Keyboard>
   </div></div>
 
